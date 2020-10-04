@@ -1,6 +1,4 @@
-# RayTracer written in Java
-
-## RayTracer written in our computergraphics course in 2020 imported from gitlab
+# RayTracer written in our computer-graphics course in 2020 imported from gitlab
 
 ## few examples:
 

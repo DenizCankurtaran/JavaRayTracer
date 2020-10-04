@@ -52,12 +52,13 @@ public class Raytracer extends Application {
 
         lightSources.add(new PointLight(new Color(1, 1, 1), true, new Point3(4, 4, 4)));
 
-        ArrayList<Point2> point2s = RandomSamplingPattern.getRandomPattern(5);
-        itemList.add(new Plane(new LambertMaterial(new ImageTexture("wood.jpg"))));
-        itemList.add(new AxisAlignedBox(new Point3(0, 0, 0), new Point3(.5, .5, .5), new PhongMaterial(new SingleColorTexture(new Color(.7, 0, .7)), new Color(.8, .8, .8), 64)));
-        itemList.add(new AxisAlignedBox(new Point3(-15, 0, -2), new Point3(3, 3.5, -1.5), new ReflectionMaterial(new SingleColorTexture(new Color(.7, .7, .7)), new Color(1, 1, 1), 64, 2)));
-
-        Camera cam2 = new PerspectiveCamera(new Point3(2.8, 2.8, 2.8), new Vector3(-1, -1, -1), new Vector3(0, 1, 0), Math.PI / 4.0, new SamplingPattern(point2s));
+        ArrayList<Point2> point2s = RandomSamplingPattern.getRandomPattern(1);
+        ArrayList<Geometry> geoList = new ArrayList<Geometry>();
+        geoList.add(new Model("bunny.obj", new LambertMaterial(new SingleColorTexture(new Color(1, 0, 0)))));
+        //itemList.add(new Sphere(new Point3(0, 0, 0), 1, new LambertMaterial(new ImageTexture("earth.jpg"))));
+        Node bunny = new Node(new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0))), new Transform().scale(new Vector3(2, 2, 2)), geoList);
+        itemList.add(bunny);
+        Camera cam2 = new PerspectiveCamera(new Point3(1, 1, 1), new Vector3(-1, -1, -1), new Vector3(0, 1, 0), Math.PI / 4.0, new SamplingPattern(point2s));
         World world = new World(itemList, lightSources, new Color(0, 0, 0), new Color(0.1, 0.1, 0.1), 1.0, cam2); //cam null
 
 
