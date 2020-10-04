@@ -3,9 +3,11 @@ package Raytracer;
 import Camera.*;
 import Geometry.*;
 import Image.ImageSaver;
+import Lighting.DirectionalLight;
 import Lighting.Light;
 import Lighting.PointLight;
 import Material.*;
+import MathLib.Normal3;
 import MathLib.Point2;
 import MathLib.Point3;
 import MathLib.Vector3;
@@ -50,15 +52,21 @@ public class Raytracer extends Application {
         ArrayList<Light> lightSources = new ArrayList<>();
         cams = new ArrayList<Camera>();
 
-        lightSources.add(new PointLight(new Color(1, 1, 1), true, new Point3(4, 4, 4)));
-
+        lightSources.add(new DirectionalLight(new Color(1, 1, 1), false, new Vector3(-1, -1, -1)));
         ArrayList<Point2> point2s = RandomSamplingPattern.getRandomPattern(1);
+        /*
         ArrayList<Geometry> geoList = new ArrayList<Geometry>();
         geoList.add(new Model("bunny.obj", new LambertMaterial(new SingleColorTexture(new Color(1, 0, 0)))));
         //itemList.add(new Sphere(new Point3(0, 0, 0), 1, new LambertMaterial(new ImageTexture("earth.jpg"))));
         Node bunny = new Node(new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0))), new Transform().scale(new Vector3(2, 2, 2)), geoList);
         itemList.add(bunny);
-        Camera cam2 = new PerspectiveCamera(new Point3(1, 1, 1), new Vector3(-1, -1, -1), new Vector3(0, 1, 0), Math.PI / 4.0, new SamplingPattern(point2s));
+        */
+        itemList.add(new Plane(new LambertMaterial(new ImageTexture("ground2.jpg"))));
+        itemList.add(new Sphere(new Point3(.3,0.5,.4), 0.1, new RefractionMaterial(new SingleColorTexture(new Color(.5, .5, .5)), RefractionMaterial.RefractionIndex.GLASS)));
+        itemList.add(new Sphere(new Point3(-.05,0.1,.3), 0.1, new RefractionMaterial(new SingleColorTexture(new Color(.5, .5, .5)), RefractionMaterial.RefractionIndex.GLASS)));
+        itemList.add(new Sphere(new Point3(.3,0.3,-.3), 0.05, new RefractionMaterial(new SingleColorTexture(new Color(.5, .5, .5)), RefractionMaterial.RefractionIndex.GLASS)));
+        itemList.add(new Sphere(new Point3(0,.7,0), 0.4, new RefractionMaterial(new SingleColorTexture(new Color(.5, .5, .5)), RefractionMaterial.RefractionIndex.GLASS)));
+        Camera cam2 = new PerspectiveCamera(new Point3(1, 1, 0), new Vector3(-1, -1, 0), new Vector3(0, 1, 0), Math.PI / 4.0, new SamplingPattern(point2s));
         World world = new World(itemList, lightSources, new Color(0, 0, 0), new Color(0.1, 0.1, 0.1), 1.0, cam2); //cam null
 
 
